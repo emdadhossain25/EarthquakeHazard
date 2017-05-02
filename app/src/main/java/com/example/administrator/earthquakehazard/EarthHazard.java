@@ -22,23 +22,31 @@ public class EarthHazard extends AppCompatActivity {
         /**
          * TODO(2) adding a fake arraylist
          */
-        ArrayList<String> city_array = new ArrayList<>();
-        city_array.add("Dhaka");
-        city_array.add("Khulna");
-        city_array.add("Rangpur");
-        city_array.add("Rajshahi");
-        city_array.add("Barisal");
-        city_array.add("Mymensingh");
-        city_array.add("Noakhali");
-        city_array.add("Chittagong");
-        city_array.add("Narayangonj");
-        city_array.add("Naoga");
+        ArrayList<EarthQuakeAdapterModel> city_array = new ArrayList<EarthQuakeAdapterModel>();
+        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"Narayangonj","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"Noakhali","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"Mymensingh","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"Rangpur","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"Mymensingh","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"Rajshahi","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"Chittagong","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5,"Khulna","30-08-10"));
+
 
         ListView listView = (ListView) findViewById(R.id.listview1);
         /**
          * TODO(3) adding listView Adapter
          */
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(EarthHazard.this, android.R.layout.simple_expandable_list_item_1, city_array);
+        EarthQuakeAdapter  arrayAdapter = new EarthQuakeAdapter(EarthHazard.this,city_array);
 
         listView.setAdapter(arrayAdapter);
     }
