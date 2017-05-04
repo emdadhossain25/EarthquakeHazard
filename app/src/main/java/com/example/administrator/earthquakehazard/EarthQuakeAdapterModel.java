@@ -6,18 +6,18 @@ package com.example.administrator.earthquakehazard;
 
 public class EarthQuakeAdapterModel {
 
-        private int magnitude;
+        private Double  magnitude;
         private String location;
-        private String date_time;
+        private int date_time;
 
-        public EarthQuakeAdapterModel(int magnitude, String location, String date_time) {
+        public EarthQuakeAdapterModel(Double magnitude, String location, int date_time) {
             this.magnitude = magnitude;
             this.location = location;
             this.date_time = date_time;
 
         }
 
-        public int getMagnitude() {
+        public Double getMagnitude() {
             return magnitude;
         }
 
@@ -25,7 +25,7 @@ public class EarthQuakeAdapterModel {
             return location;
         }
 
-        public String getDate_time() {
+        public int getDate_time() {
             return date_time;
         }
 }

@@ -42,7 +42,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
         tv_location.setText(earthQuakeAdapterModel.getLocation());
 
         TextView tv_date_time = (TextView)listView.findViewById(R.id.tv_date_time);
-        tv_date_time.setText(earthQuakeAdapterModel.getDate_time());
+        tv_date_time.setText(earthQuakeAdapterModel.getDate_time()+"");
 
         listView.setOnClickListener(new View.OnClickListener() {
             @Override

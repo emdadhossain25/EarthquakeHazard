@@ -23,23 +23,23 @@ public class EarthHazard extends AppCompatActivity {
          * TODO(2) adding a fake arraylist
          */
         ArrayList<EarthQuakeAdapterModel> city_array = new ArrayList<EarthQuakeAdapterModel>();
-        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"Narayangonj","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"Noakhali","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"Mymensingh","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"Rangpur","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"Mymensingh","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"Rajshahi","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"Chittagong","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
-        city_array.add(new EarthQuakeAdapterModel(5,"Khulna","30-08-10"));
+        city_array.add(new EarthQuakeAdapterModel(5.7,"dhaka",123456));
+//        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"Narayangonj","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"Noakhali","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"Mymensingh","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"Rangpur","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"Mymensingh","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"Rajshahi","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"Chittagong","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"dhaka","30-08-10"));
+//        city_array.add(new EarthQuakeAdapterModel(5,"Khulna","30-08-10"));
 
 
         ListView listView = (ListView) findViewById(R.id.listview1);
