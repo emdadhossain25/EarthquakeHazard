@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.zip.Inflater;
@@ -32,7 +33,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
             listView = LayoutInflater.from(getContext()).inflate(R.layout.list_item,parent,false);
         }
 
-        EarthQuakeAdapterModel earthQuakeAdapterModel = getItem(position);
+        final EarthQuakeAdapterModel earthQuakeAdapterModel = getItem(position);
 
         TextView tv_magnitude = (TextView)listView.findViewById(R.id.tv_magnitude);
         tv_magnitude.setText(earthQuakeAdapterModel.getMagnitude()+"");
@@ -42,6 +43,13 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
 
         TextView tv_date_time = (TextView)listView.findViewById(R.id.tv_date_time);
         tv_date_time.setText(earthQuakeAdapterModel.getDate_time());
+
+        listView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),earthQuakeAdapterModel.getMagnitude()+"",Toast.LENGTH_LONG).show();
+            }
+        });
 
         return listView;
     }
