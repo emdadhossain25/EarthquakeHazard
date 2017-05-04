@@ -1,5 +1,7 @@
 package com.example.administrator.earthquakehazard;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,14 +38,38 @@ public final class QueryUtils {
         ArrayList<EarthQuakeAdapterModel> earthQuakeAdapterModels = new ArrayList<>();
 
         try {
+            /**
+             * getting root json object
+             */
             JSONObject root = new JSONObject(SAMPLE_JSON_RESPONSE);
+
+            /**
+             * getting JSonArray with key "features"
+             */
             JSONArray features = root.optJSONArray("features");
-            int array_lenght = features.length();
-            for (int i = 0; i<array_lenght; i++){
-                JSONObject properties = features.optJSONObject(i);
+
+            /**
+             * Looping for the entire length of array
+             */
+            for (int i = 0; i<features.length(); i++){
+                /**
+                 * getting the i-th element for the array
+                 */
+                JSONObject array_element = features.optJSONObject(i);
+
+                // getting the properties key value in jsonObject
+                JSONObject properties = array_element.optJSONObject("properties");
+                // getting the mag key value in double type variable
                 Double magnitude = properties.optDouble("mag");
+                // getting the place key value in string type variable
                 String place = properties.optString("place");
+                // getting the time key value in int type variable
                 int time = properties.optInt("time");
+
+                /**
+                 *adding to ArrayList of type Model Class
+                 */
+                earthQuakeAdapterModels.add(new EarthQuakeAdapterModel(magnitude,place,time));
 
             }
 
