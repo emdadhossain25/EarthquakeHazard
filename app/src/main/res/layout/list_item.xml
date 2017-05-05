@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="18dp"
+    android:padding="10dp"
     android:orientation="horizontal">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_weight="1"
         tools:text="magnitude"
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tv_location"
@@ -22,16 +22,29 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="TextView"
-        android:textAlignment="center"
-        android:textSize="18sp" />
-
+        android:textSize="15sp" />
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/tv_date_time"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="8dp"
         tools:text="date_time"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="TextView"
-        android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_below="@id/tv_date_time"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="8dp"
+        tools:text="date_time"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:textSize="15sp" />
+
+</RelativeLayout>
 </LinearLayout>
