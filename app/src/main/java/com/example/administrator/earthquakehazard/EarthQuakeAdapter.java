@@ -2,9 +2,11 @@ package com.example.administrator.earthquakehazard;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
          */
         String full_location = earthQuakeAdapterModel.getLocation();
 
+
         if (full_location.contains(LOCATION_SEPARATOR)) {
             String[] parts = full_location.split(LOCATION_SEPARATOR);
             location_offset = parts[0] + LOCATION_SEPARATOR;
@@ -62,6 +65,16 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
 
         TextView tv_magnitude = (TextView) listView.findViewById(R.id.tv_magnitude);
         tv_magnitude.setText(string_magnitude);
+
+        /**
+         * getting the background color
+         */
+        GradientDrawable magnitudecircle = (GradientDrawable)tv_magnitude.getBackground();
+        int magnitudeColor = getMagnitudeColor(earthQuakeAdapterModel.getMagnitude());
+
+        // setting the color for background in the text view background color;
+        magnitudecircle.setColor(magnitudeColor);
+
 
         TextView tv_location = (TextView) listView.findViewById(R.id.tv_location);
         tv_location.setText(location);
@@ -124,6 +137,52 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
     private String formatTime(Date dateObject) {
         SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
         return timeFormat.format(dateObject);
+    }
+
+    /**
+     * method for switching color values based on magnitude values -> changed from double to int for easy switching
+     * @param magnitude
+     * @return
+     */
+    private int getMagnitudeColor(double magnitude) {
+        int magnitudeColorResourceId;
+        int magnitudeFloor = (int) Math.floor(magnitude);
+        switch (magnitudeFloor) {
+            case 0:
+            case 1:
+                magnitudeColorResourceId = R.color.magnitude1;
+                break;
+            case 2:
+                magnitudeColorResourceId = R.color.magnitude2;
+                break;
+            case 3:
+                magnitudeColorResourceId = R.color.magnitude3;
+                break;
+            case 4:
+                magnitudeColorResourceId = R.color.magnitude4;
+                break;
+            case 5:
+                magnitudeColorResourceId = R.color.magnitude5;
+                break;
+            case 6:
+                magnitudeColorResourceId = R.color.magnitude6;
+                break;
+            case 7:
+                magnitudeColorResourceId = R.color.magnitude7;
+                break;
+            case 8:
+                magnitudeColorResourceId = R.color.magnitude8;
+                break;
+            case 9:
+                magnitudeColorResourceId = R.color.magnitude9;
+                break;
+            default:
+                magnitudeColorResourceId = R.color.magnitude10plus;
+                break;
+        }
+
+        // return statement for getting the color back in a int format because the setcolor method expects int
+        return ContextCompat.getColor(getContext(), magnitudeColorResourceId);
     }
 
 
