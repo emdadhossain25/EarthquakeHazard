@@ -66,11 +66,13 @@ public final class QueryUtils {
                 String place = properties.optString("place");
                 // getting the time key value in int type variable
                 Long time = properties.optLong("time");
+                // getting the url key from the json response using key url
+                String url = properties.optString("url");
 
                 /**
                  *adding to ArrayList of type Model Class
                  */
-                earthQuakeAdapterModels.add(new EarthQuakeAdapterModel(magnitude, place, time));
+                earthQuakeAdapterModels.add(new EarthQuakeAdapterModel(magnitude, place, time, url));
 
             }
 

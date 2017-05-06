@@ -9,11 +9,13 @@ public class EarthQuakeAdapterModel {
     private Double magnitude;
     private String location;
     private Long date_time;
+    private String url;
 
-    public EarthQuakeAdapterModel(Double magnitude, String location, Long date_time) {
+    public EarthQuakeAdapterModel(Double magnitude, String location, Long date_time, String url) {
         this.magnitude = magnitude;
         this.location = location;
         this.date_time = date_time;
+        this.url = url;
 
     }
 
@@ -29,4 +31,7 @@ public class EarthQuakeAdapterModel {
         return date_time;
     }
 
+    public String getUrl() {
+        return url;
+    }
 }

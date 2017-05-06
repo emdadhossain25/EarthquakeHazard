@@ -2,7 +2,9 @@ package com.example.administrator.earthquakehazard;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.zip.Inflater;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 /**
  * Created by Administrator on 5/2/2017.
@@ -85,6 +89,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
         TextView tv_date_time = (TextView) listView.findViewById(R.id.date);
         Long timeInmilliseconds = earthQuakeAdapterModel.getDate_time();
 
+
         /**
          * getting date object
          */
@@ -100,6 +105,9 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
         listView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Uri earthQuakeUri = Uri.parse(earthQuakeAdapterModel.getUrl());
+                Intent website_intent = new Intent(Intent.ACTION_VIEW,earthQuakeUri);
+                startActivity(getContext(),website_intent,null);
                 Toast.makeText(getContext(), earthQuakeAdapterModel.getMagnitude() + "", Toast.LENGTH_LONG).show();
             }
         });
