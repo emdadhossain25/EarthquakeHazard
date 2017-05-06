@@ -23,6 +23,10 @@ import java.util.zip.Inflater;
 
 public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
 
+    String location;
+    String location_offset;
+    private static final String LOCATION_SEPARATOR = "of ";
+
     public EarthQuakeAdapter(Activity context, ArrayList<EarthQuakeAdapterModel> earthQuakeAdapterModels) {
         super(context,0,earthQuakeAdapterModels);
     }
@@ -37,15 +41,38 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
 
         final EarthQuakeAdapterModel earthQuakeAdapterModel = getItem(position);
 
+
+        /**
+         * spliting the text in half based on condition "of" or adding near using strings.xml
+         */
+        String full_location = earthQuakeAdapterModel.getLocation();
+
+        if (full_location.contains(LOCATION_SEPARATOR)) {
+            String[] parts = full_location.split(LOCATION_SEPARATOR);
+            location_offset = parts[0] + LOCATION_SEPARATOR;
+            location = parts[1];
+        } else {
+            location_offset = getContext().getString(R.string.near_the);
+            location = full_location;
+        }
+
         TextView tv_magnitude = (TextView)listView.findViewById(R.id.tv_magnitude);
         tv_magnitude.setText(earthQuakeAdapterModel.getMagnitude()+"");
 
         TextView tv_location = (TextView)listView.findViewById(R.id.tv_location);
-        tv_location.setText(earthQuakeAdapterModel.getLocation());
+        tv_location.setText(location);
+
+        TextView tv_location_offset = (TextView)listView.findViewById(R.id.tv_location_offset);
+        tv_location_offset.setText(location_offset);
 
         TextView tv_date_time = (TextView)listView.findViewById(R.id.tv_date_time);
         Long timeInmilliseconds = earthQuakeAdapterModel.getDate_time();
+
+        /**
+         * getting date object
+         */
         Date dateObject = new Date(timeInmilliseconds);
+
         String dateToDisplay = formatDate(dateObject);
         tv_date_time.setText(dateToDisplay);
 
