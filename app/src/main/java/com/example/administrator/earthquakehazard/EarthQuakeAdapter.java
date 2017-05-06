@@ -63,26 +63,26 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
         Double magnitude_double = earthQuakeAdapterModel.getMagnitude();
         String string_magnitude = doublFormatter(magnitude_double);
 
-        TextView tv_magnitude = (TextView) listView.findViewById(R.id.tv_magnitude);
+        TextView tv_magnitude = (TextView) listView.findViewById(R.id.magnitude);
         tv_magnitude.setText(string_magnitude);
 
         /**
          * getting the background color
          */
-        GradientDrawable magnitudecircle = (GradientDrawable)tv_magnitude.getBackground();
+        GradientDrawable magnitudecircle = (GradientDrawable) tv_magnitude.getBackground();
         int magnitudeColor = getMagnitudeColor(earthQuakeAdapterModel.getMagnitude());
 
         // setting the color for background in the text view background color;
         magnitudecircle.setColor(magnitudeColor);
 
 
-        TextView tv_location = (TextView) listView.findViewById(R.id.tv_location);
+        TextView tv_location = (TextView) listView.findViewById(R.id.primary_location);
         tv_location.setText(location);
 
-        TextView tv_location_offset = (TextView) listView.findViewById(R.id.tv_location_offset);
+        TextView tv_location_offset = (TextView) listView.findViewById(R.id.location_offset);
         tv_location_offset.setText(location_offset);
 
-        TextView tv_date_time = (TextView) listView.findViewById(R.id.tv_date_time);
+        TextView tv_date_time = (TextView) listView.findViewById(R.id.date);
         Long timeInmilliseconds = earthQuakeAdapterModel.getDate_time();
 
         /**
@@ -93,7 +93,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
         String dateToDisplay = formatDate(dateObject);
         tv_date_time.setText(dateToDisplay);
 
-        TextView tv_time = (TextView) listView.findViewById(R.id.tv_time);
+        TextView tv_time = (TextView) listView.findViewById(R.id.time);
         String time = formatTime(dateObject);
         tv_time.setText(time);
 
@@ -141,6 +141,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
 
     /**
      * method for switching color values based on magnitude values -> changed from double to int for easy switching
+     *
      * @param magnitude
      * @return
      */
