@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,15 +29,15 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
     private static final String LOCATION_SEPARATOR = "of ";
 
     public EarthQuakeAdapter(Activity context, ArrayList<EarthQuakeAdapterModel> earthQuakeAdapterModels) {
-        super(context,0,earthQuakeAdapterModels);
+        super(context, 0, earthQuakeAdapterModels);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listView = convertView;
-        if (listView == null){
-            listView = LayoutInflater.from(getContext()).inflate(R.layout.list_item,parent,false);
+        if (listView == null) {
+            listView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
         }
 
         final EarthQuakeAdapterModel earthQuakeAdapterModel = getItem(position);
@@ -56,16 +57,19 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
             location = full_location;
         }
 
-        TextView tv_magnitude = (TextView)listView.findViewById(R.id.tv_magnitude);
-        tv_magnitude.setText(earthQuakeAdapterModel.getMagnitude()+"");
+        Double magnitude_double = earthQuakeAdapterModel.getMagnitude();
+        String string_magnitude = doublFormatter(magnitude_double);
 
-        TextView tv_location = (TextView)listView.findViewById(R.id.tv_location);
+        TextView tv_magnitude = (TextView) listView.findViewById(R.id.tv_magnitude);
+        tv_magnitude.setText(string_magnitude);
+
+        TextView tv_location = (TextView) listView.findViewById(R.id.tv_location);
         tv_location.setText(location);
 
-        TextView tv_location_offset = (TextView)listView.findViewById(R.id.tv_location_offset);
+        TextView tv_location_offset = (TextView) listView.findViewById(R.id.tv_location_offset);
         tv_location_offset.setText(location_offset);
 
-        TextView tv_date_time = (TextView)listView.findViewById(R.id.tv_date_time);
+        TextView tv_date_time = (TextView) listView.findViewById(R.id.tv_date_time);
         Long timeInmilliseconds = earthQuakeAdapterModel.getDate_time();
 
         /**
@@ -76,33 +80,44 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
         String dateToDisplay = formatDate(dateObject);
         tv_date_time.setText(dateToDisplay);
 
-        TextView tv_time = (TextView)listView.findViewById(R.id.tv_time);
+        TextView tv_time = (TextView) listView.findViewById(R.id.tv_time);
         String time = formatTime(dateObject);
         tv_time.setText(time);
 
         listView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),earthQuakeAdapterModel.getMagnitude()+"",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), earthQuakeAdapterModel.getMagnitude() + "", Toast.LENGTH_LONG).show();
             }
         });
 
         return listView;
     }
 
+    /**
+     * magnitude double to string formatter
+     */
+    private String doublFormatter(Double mag) {
+        DecimalFormat formatter = new DecimalFormat("0.0");
+        String output = formatter.format(mag);
+        return output;
+    }
+
 
     /**
      * formating date into current date converting it from UNIX time
+     *
      * @param dateObject
      * @return
      */
-    private String formatDate(Date dateObject){
+    private String formatDate(Date dateObject) {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM DD, yyyy");
         return dateFormatter.format(dateObject);
     }
 
     /**
      * formating time into current time converting it from UNIX time
+     *
      * @param dateObject
      * @return
      */
@@ -110,5 +125,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
         SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
         return timeFormat.format(dateObject);
     }
+
+
 }
 
