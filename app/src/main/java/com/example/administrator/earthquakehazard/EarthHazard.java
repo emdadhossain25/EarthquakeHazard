@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class EarthHazard extends AppCompatActivity {
 
     private static final String USGS_REQUEST_URL =
-            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2017-05-02&minfelt=50&minmagnitude=5";
+            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2017-05-02&minfelt=50&minmagnitude=3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
