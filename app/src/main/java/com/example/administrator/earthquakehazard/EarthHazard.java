@@ -3,6 +3,8 @@ package com.example.administrator.earthquakehazard;
 import android.content.Context;
 import android.content.Loader;
 import android.content.AsyncTaskLoader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,7 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
     String LOG_TAG = "Earthquake app";
     ListView listView;
     TextView textView;
+    boolean isConnected;
     ProgressBar progressBar;
     EarthQuakeAdapter arrayAdapter;
     private static final String USGS_REQUEST_URL =
@@ -30,10 +33,18 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
         Log.d(LOG_TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earth_hazard);
+
+        ConnectivityManager cm =
+                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
         listView = (ListView) findViewById(R.id.listview1);
         textView = (TextView) findViewById(R.id.tv_emptyview);
         listView.setEmptyView(textView);
-         progressBar = (ProgressBar) findViewById(R.id.progress);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setIndeterminate(true);
         android.app.LoaderManager loaderManager = getLoaderManager();
@@ -45,19 +56,19 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
     @Override
     public Loader<List<EarthQuakeAdapterModel>> onCreateLoader(int i, Bundle bundle) {
         Log.d(LOG_TAG, "onCreateLoader");
-        return new EarthquakeLoader(this,USGS_REQUEST_URL);
+        return new EarthquakeLoader(this, USGS_REQUEST_URL);
     }
 
     // TODO(4): Implement the methods onLoadFinished method - called in main thread
     @Override
     public void onLoadFinished(Loader<List<EarthQuakeAdapterModel>> loader, List<EarthQuakeAdapterModel> data) {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         progressBar.setVisibility(View.GONE);
-        textView.setText("No EarthQuake data found");
+        if (!isConnected) {
+            textView.setText("No Internet Connection");
+        } else {
+            textView.setText("No EarthQuake data found");
+        }
         if (data != null && !data.isEmpty()) {
             // TODO(4.a): checking and setting the adapter;
             arrayAdapter = new EarthQuakeAdapter(EarthHazard.this, (ArrayList<EarthQuakeAdapterModel>) data);
