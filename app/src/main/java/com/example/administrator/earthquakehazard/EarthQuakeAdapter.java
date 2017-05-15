@@ -1,11 +1,9 @@
 package com.example.administrator.earthquakehazard;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -20,7 +18,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.zip.Inflater;
 
 import static android.support.v4.content.ContextCompat.startActivity;
 
@@ -28,14 +25,14 @@ import static android.support.v4.content.ContextCompat.startActivity;
  * Created by Administrator on 5/2/2017.
  */
 
-public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
+public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeModel> {
 
     String location;
     String location_offset;
     private static final String LOCATION_SEPARATOR = "of ";
 
-    public EarthQuakeAdapter(Activity context, ArrayList<EarthQuakeAdapterModel> earthQuakeAdapterModels) {
-        super(context, 0, earthQuakeAdapterModels);
+    public EarthQuakeAdapter(Activity context, ArrayList<EarthQuakeModel> earthQuakeModels) {
+        super(context, 0, earthQuakeModels);
     }
 
     @NonNull
@@ -46,13 +43,13 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
             listView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
         }
 
-        final EarthQuakeAdapterModel earthQuakeAdapterModel = getItem(position);
+        final EarthQuakeModel earthQuakeModel = getItem(position);
 
 
         /**
          * spliting the text in half based on condition "of" or adding near using strings.xml
          */
-        String full_location = earthQuakeAdapterModel.getLocation();
+        String full_location = earthQuakeModel.getLocation();
 
 
         if (full_location.contains(LOCATION_SEPARATOR)) {
@@ -64,7 +61,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
             location = full_location;
         }
 
-        Double magnitude_double = earthQuakeAdapterModel.getMagnitude();
+        Double magnitude_double = earthQuakeModel.getMagnitude();
         String string_magnitude = doublFormatter(magnitude_double);
 
         TextView tv_magnitude = (TextView) listView.findViewById(R.id.magnitude);
@@ -74,7 +71,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
          * getting the background color
          */
         GradientDrawable magnitudecircle = (GradientDrawable) tv_magnitude.getBackground();
-        int magnitudeColor = getMagnitudeColor(earthQuakeAdapterModel.getMagnitude());
+        int magnitudeColor = getMagnitudeColor(earthQuakeModel.getMagnitude());
 
         // setting the color for background in the text view background color;
         magnitudecircle.setColor(magnitudeColor);
@@ -87,7 +84,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
         tv_location_offset.setText(location_offset);
 
         TextView tv_date_time = (TextView) listView.findViewById(R.id.date);
-        Long timeInmilliseconds = earthQuakeAdapterModel.getDate_time();
+        Long timeInmilliseconds = earthQuakeModel.getDate_time();
 
 
         /**
@@ -105,10 +102,10 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeAdapterModel> {
         listView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri earthQuakeUri = Uri.parse(earthQuakeAdapterModel.getUrl());
+                Uri earthQuakeUri = Uri.parse(earthQuakeModel.getUrl());
                 Intent website_intent = new Intent(Intent.ACTION_VIEW,earthQuakeUri);
                 startActivity(getContext(),website_intent,null);
-                Toast.makeText(getContext(), earthQuakeAdapterModel.getMagnitude() + "", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), earthQuakeModel.getMagnitude() + "", Toast.LENGTH_LONG).show();
             }
         });
 

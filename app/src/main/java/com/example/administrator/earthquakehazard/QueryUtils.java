@@ -1,10 +1,8 @@
 package com.example.administrator.earthquakehazard;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -42,7 +40,7 @@ public final class QueryUtils {
         }
 
         // Extract relevant fields from the JSON response and create an {@link Event} object
-//        EarthQuakeAdapterModel earthquake = extractEarthQuakes(jsonResponse);
+//        EarthQuakeModel earthquake = extractEarthQuakes(jsonResponse);
 
         // Return the {@link Event}
         return jsonResponse;
@@ -117,8 +115,8 @@ public final class QueryUtils {
         }
         return output.toString();
     }
-    public static ArrayList<EarthQuakeAdapterModel> extractEarthQuakes(String params) {
-        ArrayList<EarthQuakeAdapterModel> earthQuakeAdapterModels = new ArrayList<>();
+    public static ArrayList<EarthQuakeModel> extractEarthQuakes(String params) {
+        ArrayList<EarthQuakeModel> earthQuakeModels = new ArrayList<>();
         Log.d("Queryutils","extractEarthQuakes");
         try {
             /**
@@ -155,7 +153,7 @@ public final class QueryUtils {
                  *adding to ArrayList of type Model Class
                  */
                 Log.d("Queryutils","add data to model");
-                earthQuakeAdapterModels.add(new EarthQuakeAdapterModel(magnitude, place, time, url));
+                earthQuakeModels.add(new EarthQuakeModel(magnitude, place, time, url));
 
             }
 
@@ -163,7 +161,7 @@ public final class QueryUtils {
             e.printStackTrace();
         }
 
-        return earthQuakeAdapterModels;
+        return earthQuakeModels;
     }
 
 }

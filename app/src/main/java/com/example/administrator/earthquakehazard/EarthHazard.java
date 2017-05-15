@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO(1): Implement LoaderManager Callback with Library imported-import android.content.AsyncTaskLoader;
-public class EarthHazard extends AppCompatActivity implements android.app.LoaderManager.LoaderCallbacks<List<EarthQuakeAdapterModel>> {
+public class EarthHazard extends AppCompatActivity implements android.app.LoaderManager.LoaderCallbacks<List<EarthQuakeModel>> {
 
     String LOG_TAG = "Earthquake app";
     ListView listView;
@@ -54,14 +54,14 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
 
     // TODO(3): Implement the methods onCreateLoader
     @Override
-    public Loader<List<EarthQuakeAdapterModel>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<EarthQuakeModel>> onCreateLoader(int i, Bundle bundle) {
         Log.d(LOG_TAG, "onCreateLoader");
         return new EarthquakeLoader(this, USGS_REQUEST_URL);
     }
 
     // TODO(4): Implement the methods onLoadFinished method - called in main thread
     @Override
-    public void onLoadFinished(Loader<List<EarthQuakeAdapterModel>> loader, List<EarthQuakeAdapterModel> data) {
+    public void onLoadFinished(Loader<List<EarthQuakeModel>> loader, List<EarthQuakeModel> data) {
 
         progressBar.setVisibility(View.GONE);
         if (!isConnected) {
@@ -71,7 +71,7 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
         }
         if (data != null && !data.isEmpty()) {
             // TODO(4.a): checking and setting the adapter;
-            arrayAdapter = new EarthQuakeAdapter(EarthHazard.this, (ArrayList<EarthQuakeAdapterModel>) data);
+            arrayAdapter = new EarthQuakeAdapter(EarthHazard.this, (ArrayList<EarthQuakeModel>) data);
             listView.setAdapter(arrayAdapter);
             Log.d(LOG_TAG, "onLoadfinished");
 
@@ -81,7 +81,7 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
 
     // TODO(5): Implement the methods onCreateLoader
     @Override
-    public void onLoaderReset(Loader<List<EarthQuakeAdapterModel>> loader) {
+    public void onLoaderReset(Loader<List<EarthQuakeModel>> loader) {
         // TODO(5.a): reseting the adapter
         arrayAdapter.clear();
         Log.d(LOG_TAG, "onLoaderReset");
@@ -91,7 +91,7 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
     /**
      * TODO(2)- creating an earthquake Loader using the import android.content.Loader and  import android.content.AsyncTaskLoader;
      */
-    private static class EarthquakeLoader extends AsyncTaskLoader<List<EarthQuakeAdapterModel>> {
+    private static class EarthquakeLoader extends AsyncTaskLoader<List<EarthQuakeModel>> {
 
         String result;
 
@@ -111,7 +111,7 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
 
         // TODO(2.c)- over riding background thread works in loadinBackground method
         @Override
-        public List<EarthQuakeAdapterModel> loadInBackground() {
+        public List<EarthQuakeModel> loadInBackground() {
             Log.d("EarthQuakeLoaderCLass", "loadInBackground");
             if (result == null) {
                 return null;
@@ -119,7 +119,7 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
 
             // TODO(2.d)- fetching the JsonResponse - using requestURL, makeHttpCOnnection, readInputStream, addinng bufferedRead and then adding in the model class
             result = QueryUtils.fetchEarthquakeData(result);
-            ArrayList<EarthQuakeAdapterModel> city_array = QueryUtils.extractEarthQuakes(result);
+            ArrayList<EarthQuakeModel> city_array = QueryUtils.extractEarthQuakes(result);
             return city_array;
         }
     }
