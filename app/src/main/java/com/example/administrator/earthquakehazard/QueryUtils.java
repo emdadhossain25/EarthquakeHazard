@@ -28,6 +28,8 @@ public final class QueryUtils {
     }
 
     public static String fetchEarthquakeData(String requestUrl) {
+
+        Log.d("Queryutils","fetchEarthquakeData");
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -48,6 +50,7 @@ public final class QueryUtils {
 
 
     private static URL createUrl(String stringUrl) {
+        Log.d("Queryutils","createUrl");
         URL to_open_url = null;
         try {
             to_open_url = new URL(stringUrl);
@@ -58,6 +61,7 @@ public final class QueryUtils {
     }
 
     private static String makeHttpRequest(URL url) throws IOException {
+        Log.d("Queryutils","makeHttpRequest");
         String jsonResponse = "";
 
         // If the URL is null, then return early.
@@ -100,6 +104,7 @@ public final class QueryUtils {
      * whole JSON response from the server.
      */
     private static String readFromStream(InputStream inputStream) throws IOException {
+        Log.d("Queryutils","readFromStream");
         StringBuilder output = new StringBuilder();
         if (inputStream != null) {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
@@ -113,11 +118,8 @@ public final class QueryUtils {
         return output.toString();
     }
     public static ArrayList<EarthQuakeAdapterModel> extractEarthQuakes(String params) {
-
-
-
         ArrayList<EarthQuakeAdapterModel> earthQuakeAdapterModels = new ArrayList<>();
-
+        Log.d("Queryutils","extractEarthQuakes");
         try {
             /**
              * getting root json object
@@ -152,6 +154,7 @@ public final class QueryUtils {
                 /**
                  *adding to ArrayList of type Model Class
                  */
+                Log.d("Queryutils","add data to model");
                 earthQuakeAdapterModels.add(new EarthQuakeAdapterModel(magnitude, place, time, url));
 
             }
