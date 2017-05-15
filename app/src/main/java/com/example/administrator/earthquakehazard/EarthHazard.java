@@ -6,7 +6,9 @@ import android.content.AsyncTaskLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
     String LOG_TAG = "Earthquake app";
     ListView listView;
     TextView textView;
+    ProgressBar progressBar;
     EarthQuakeAdapter arrayAdapter;
     private static final String USGS_REQUEST_URL =
             "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2017-05-02&minfelt=50&minmagnitude=3";
@@ -30,6 +33,9 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
         listView = (ListView) findViewById(R.id.listview1);
         textView = (TextView) findViewById(R.id.tv_emptyview);
         listView.setEmptyView(textView);
+         progressBar = (ProgressBar) findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setIndeterminate(true);
         android.app.LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(1, null, EarthHazard.this);
         Log.d(LOG_TAG, "initLoader");
@@ -39,14 +45,19 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
     @Override
     public Loader<List<EarthQuakeAdapterModel>> onCreateLoader(int i, Bundle bundle) {
         Log.d(LOG_TAG, "onCreateLoader");
-        return new EarthquakeLoader(this, USGS_REQUEST_URL);
+        return new EarthquakeLoader(this,USGS_REQUEST_URL);
     }
 
     // TODO(4): Implement the methods onLoadFinished method - called in main thread
     @Override
     public void onLoadFinished(Loader<List<EarthQuakeAdapterModel>> loader, List<EarthQuakeAdapterModel> data) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        progressBar.setVisibility(View.GONE);
         textView.setText("No EarthQuake data found");
-
         if (data != null && !data.isEmpty()) {
             // TODO(4.a): checking and setting the adapter;
             arrayAdapter = new EarthQuakeAdapter(EarthHazard.this, (ArrayList<EarthQuakeAdapterModel>) data);

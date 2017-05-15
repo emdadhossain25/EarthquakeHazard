@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?><!--TODO(1) declare an listView for the full layout width and height -->
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<ListView
-    android:id="@+id/listview1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-</ListView>
+    <ListView
+        android:id="@+id/listview1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
     <TextView
         android:id="@+id/tv_emptyview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
+<ProgressBar
+    android:id="@+id/progress"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"/>
 </RelativeLayout>
