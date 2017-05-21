@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.AsyncTaskLoader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,8 +31,7 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
     boolean isConnected;
     ProgressBar progressBar;
     EarthQuakeAdapter arrayAdapter;
-    private static final String USGS_REQUEST_URL =
-            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2017-05-02&minfelt=50&minmagnitude=3";
+    private static final String USGS_REQUEST_URL ="https://earthquake.usgs.gov/fdsnws/event/1/query";
 
 
     @Override
@@ -60,7 +62,16 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
     @Override
     public Loader<List<EarthQuakeModel>> onCreateLoader(int i, Bundle bundle) {
         Log.d(LOG_TAG, "onCreateLoader");
-        return new EarthquakeLoader(this, USGS_REQUEST_URL);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String minMagnitude = sharedPreferences.getString(getString(R.string.settings_min_magnitude_key),getString(R.string.settings_min_magnitude_default));
+        Uri baseUri = Uri.parse(USGS_REQUEST_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        uriBuilder.appendQueryParameter("format","geojson");
+        uriBuilder.appendQueryParameter("limit","100");
+        uriBuilder.appendQueryParameter("minmag",minMagnitude);
+        uriBuilder.appendQueryParameter("orderby","magnitude");
+        return new EarthquakeLoader(this, uriBuilder.toString());
     }
 
     // TODO(4): Implement the methods onLoadFinished method - called in main thread
