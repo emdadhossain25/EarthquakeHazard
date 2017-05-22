@@ -70,7 +70,7 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
         uriBuilder.appendQueryParameter("format","geojson");
         uriBuilder.appendQueryParameter("limit","100");
         uriBuilder.appendQueryParameter("minmag",minMagnitude);
-        uriBuilder.appendQueryParameter("orderby","magnitude");
+        uriBuilder.appendQueryParameter("orderby","time");
         return new EarthquakeLoader(this, uriBuilder.toString());
     }
 
