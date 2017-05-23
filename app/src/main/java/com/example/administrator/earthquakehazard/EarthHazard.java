@@ -91,6 +91,7 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
         }
         if (data != null && !data.isEmpty()) {
             // TODO(4.a): checking and setting the adapter;
+            arrayAdapter.clear();
             arrayAdapter = new EarthQuakeAdapter(EarthHazard.this, (ArrayList<EarthQuakeModel>) data);
             listView.setAdapter(arrayAdapter);
             Log.d(LOG_TAG, "onLoadfinished");
@@ -103,8 +104,6 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
     @Override
     public void onLoaderReset(Loader<List<EarthQuakeModel>> loader) {
         // TODO(5.a): reseting the adapter
-        arrayAdapter.clear();
-        Log.d(LOG_TAG, "onLoaderReset");
     }
 
 
@@ -159,5 +158,10 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
