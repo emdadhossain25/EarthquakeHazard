@@ -28,9 +28,10 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
     String LOG_TAG = "Earthquake app";
     ListView listView;
     TextView textView;
-    boolean isConnected;
+    boolean isConnected_activeNetwork, isConnected_wifiNetwork;
     ProgressBar progressBar;
     EarthQuakeAdapter arrayAdapter;
+    android.app.LoaderManager loaderManager;
     private static final String USGS_REQUEST_URL ="https://earthquake.usgs.gov/fdsnws/event/1/query";
 
 
@@ -44,8 +45,11 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
                 (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        isConnected = activeNetwork != null &&
+        NetworkInfo wifi_status = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        isConnected_activeNetwork = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
+        isConnected_wifiNetwork = wifi_status.isConnected();
 
         listView = (ListView) findViewById(R.id.listview1);
         textView = (TextView) findViewById(R.id.tv_emptyview);
@@ -53,7 +57,7 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
         progressBar = (ProgressBar) findViewById(R.id.progress);
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setIndeterminate(true);
-        android.app.LoaderManager loaderManager = getLoaderManager();
+        loaderManager = getLoaderManager();
         loaderManager.initLoader(1, null, EarthHazard.this);
         Log.d(LOG_TAG, "initLoader");
     }
@@ -84,14 +88,16 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
     public void onLoadFinished(Loader<List<EarthQuakeModel>> loader, List<EarthQuakeModel> data) {
 
         progressBar.setVisibility(View.GONE);
-        if (!isConnected) {
+        if (!isConnected_activeNetwork) {
             textView.setText("No Internet Connection");
-        } else {
+        } else if (!isConnected_wifiNetwork){
+            textView.setText("No Internet Connection");
+        }
+        else {
             textView.setText("No EarthQuake data found");
         }
         if (data != null && !data.isEmpty()) {
             // TODO(4.a): checking and setting the adapter;
-            arrayAdapter.clear();
             arrayAdapter = new EarthQuakeAdapter(EarthHazard.this, (ArrayList<EarthQuakeModel>) data);
             listView.setAdapter(arrayAdapter);
             Log.d(LOG_TAG, "onLoadfinished");
@@ -104,6 +110,8 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
     @Override
     public void onLoaderReset(Loader<List<EarthQuakeModel>> loader) {
         // TODO(5.a): reseting the adapter
+
+//            arrayAdapter.clear();
     }
 
 
