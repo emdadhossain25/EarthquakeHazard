@@ -1,4 +1,4 @@
-package com.example.administrator.earthquakehazard;
+package rel.emdad.administrator.earthquakehazard;
 
 import android.content.SharedPreferences;
 import android.preference.ListPreference;
@@ -9,13 +9,51 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 public class SettingsActivity extends AppCompatActivity {
+
+    AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        adView.loadAd(adRequest);
     }
+
+    @Override
+    protected void onPause() {
+
+        if (adView != null) {
+            adView.pause();
+        }
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        if (adView != null) {
+            adView.resume();
+        }
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
+
 
     public static class EarthquakePreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
         @Override

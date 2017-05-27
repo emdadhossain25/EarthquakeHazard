@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.administrator.earthquakehazard">
-
+    package="rel.emdad.administrator.earthquakehazard">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -12,20 +11,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EarthHazard">
+        <activity android:name="rel.emdad.administrator.earthquakehazard.EarthHazard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity"
+        <activity android:name="rel.emdad.administrator.earthquakehazard.SettingsActivity"
             android:label="@string/settings_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".EarthHazard"></meta-data>
+                android:value="rel.emdad.administrator.earthquakehazard.EarthHazard"></meta-data>
 
         </activity>
+
+        <!--Include the AdActivity configChanges and theme. -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
     </application>
 
 </manifest>

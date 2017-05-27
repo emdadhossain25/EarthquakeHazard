@@ -1,4 +1,4 @@
-package com.example.administrator.earthquakehazard;
+package rel.emdad.administrator.earthquakehazard;
 
 import android.util.Log;
 

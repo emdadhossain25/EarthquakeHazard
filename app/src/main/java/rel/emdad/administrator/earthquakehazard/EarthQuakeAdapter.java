@@ -1,4 +1,4 @@
-package com.example.administrator.earthquakehazard;
+package rel.emdad.administrator.earthquakehazard;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -105,7 +104,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuakeModel> {
                 Uri earthQuakeUri = Uri.parse(earthQuakeModel.getUrl());
                 Intent website_intent = new Intent(Intent.ACTION_VIEW,earthQuakeUri);
                 startActivity(getContext(),website_intent,null);
-                Toast.makeText(getContext(), earthQuakeModel.getMagnitude() + "", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), earthQuakeModel.getMagnitude() + "", Toast.LENGTH_LONG).show();
             }
         });
 

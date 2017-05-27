@@ -1,4 +1,4 @@
-package com.example.administrator.earthquakehazard;
+package rel.emdad.administrator.earthquakehazard;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +29,14 @@ import java.util.List;
 public class EarthHazard extends AppCompatActivity implements android.app.LoaderManager.LoaderCallbacks<List<EarthQuakeModel>> {
 
     String LOG_TAG = "Earthquake app";
+    AdView adView;
     ListView listView;
     TextView textView;
     boolean isConnected_activeNetwork, isConnected_wifiNetwork;
     ProgressBar progressBar;
     EarthQuakeAdapter arrayAdapter;
     android.app.LoaderManager loaderManager;
-    private static final String USGS_REQUEST_URL ="https://earthquake.usgs.gov/fdsnws/event/1/query";
+    private static final String USGS_REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query";
 
 
     @Override
@@ -51,6 +55,11 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
                 activeNetwork.isConnectedOrConnecting();
         isConnected_wifiNetwork = wifi_status.isConnected();
 
+        adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        adView.loadAd(adRequest);
+
         listView = (ListView) findViewById(R.id.listview1);
         textView = (TextView) findViewById(R.id.tv_emptyview);
         listView.setEmptyView(textView);
@@ -62,12 +71,41 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
         Log.d(LOG_TAG, "initLoader");
     }
 
+
+    @Override
+    protected void onPause() {
+
+        if (adView != null) {
+            adView.pause();
+        }
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        if (adView != null) {
+            adView.resume();
+        }
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
+
+
     // TODO(3): Implement the methods onCreateLoader
     @Override
     public Loader<List<EarthQuakeModel>> onCreateLoader(int i, Bundle bundle) {
         Log.d(LOG_TAG, "onCreateLoader");
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String minMagnitude = sharedPreferences.getString(getString(R.string.settings_min_magnitude_key),getString(R.string.settings_min_magnitude_default));
+        String minMagnitude = sharedPreferences.getString(getString(R.string.settings_min_magnitude_key), getString(R.string.settings_min_magnitude_default));
         String orderBy = sharedPreferences.getString(
                 getString(R.string.settings_order_by_key),
                 getString(R.string.settings_order_by_default)
@@ -76,10 +114,10 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
         Uri baseUri = Uri.parse(USGS_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
-        uriBuilder.appendQueryParameter("format","geojson");
-        uriBuilder.appendQueryParameter("limit","400");
-        uriBuilder.appendQueryParameter("minmag",minMagnitude);
-        uriBuilder.appendQueryParameter("orderby",orderBy);
+        uriBuilder.appendQueryParameter("format", "geojson");
+        uriBuilder.appendQueryParameter("limit", "400");
+        uriBuilder.appendQueryParameter("minmag", minMagnitude);
+        uriBuilder.appendQueryParameter("orderby", orderBy);
         return new EarthquakeLoader(this, uriBuilder.toString());
     }
 
@@ -90,10 +128,9 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
         progressBar.setVisibility(View.GONE);
         if (!isConnected_activeNetwork) {
             textView.setText("No Internet Connection");
-        } else if (!isConnected_wifiNetwork){
+        } else if (!isConnected_wifiNetwork) {
             textView.setText("No Internet Connection");
-        }
-        else {
+        } else {
             textView.setText("No EarthQuake data found");
         }
         if (data != null && !data.isEmpty()) {
@@ -153,14 +190,14 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main,menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.action_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
             return true;
@@ -168,8 +205,4 @@ public class EarthHazard extends AppCompatActivity implements android.app.Loader
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }
